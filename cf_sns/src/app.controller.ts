@@ -17,11 +17,11 @@ interface Post {
   commentCount: number;
 }
 
-@Controller()
+@Controller('post') // 첫 인자는 기존 path에 접두어 붙이는 역할
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get() // 첫 인자는 접두어 붙이는 역할
   getPost(): Post {
     return {
       author: 'yeomkyeorae',
