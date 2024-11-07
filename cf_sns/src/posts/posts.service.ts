@@ -12,33 +12,6 @@ export interface PostModel {
   commentCount: number;
 }
 
-let posts: PostModel[] = [
-  {
-    id: 1,
-    author: 'mourinho',
-    title: 'this is soccer',
-    content: 'do it',
-    likeCount: 10000,
-    commentCount: 90,
-  },
-  {
-    id: 2,
-    author: 'simeone',
-    title: 'this is not soccer',
-    content: 'just do it',
-    likeCount: 11000,
-    commentCount: 95,
-  },
-  {
-    id: 3,
-    author: 'kompany',
-    title: 'this is not football',
-    content: 'just do it like me',
-    likeCount: 12000,
-    commentCount: 92,
-  },
-];
-
 @Injectable()
 export class PostsService {
   constructor(
@@ -119,14 +92,19 @@ export class PostsService {
     return newPost;
   }
 
-  deletePost(postId: number) {
-    const post = posts.find((post) => post.id === postId);
+  async deletePost(postId: number) {
+    const post = await this.postsRepository.findOne({
+      where: {
+        id: postId,
+      },
+    });
 
     if (!post) {
       throw new NotFoundException();
     }
 
-    posts = posts.filter((post) => post.id !== postId);
+    await this.postsRepository.delete(postId);
+
     return postId;
   }
 }
