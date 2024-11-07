@@ -8,6 +8,7 @@ import { PostsModel } from './posts/entities/posts.entity';
 @Module({
   imports: [
     PostsModule,
+    // typeorm 연결 설정
     TypeOrmModule.forRoot({
       type: 'postgres', // 데이터베이스 타입
       host: '127.0.0.1',
