@@ -42,13 +42,13 @@ let posts: PostModel[] = [
 @Injectable()
 export class PostsService {
   constructor(
-    // PostsModel을 다룰 수 있는 Repository를 주입한다?
+    // PostsModel을 다룰 수 있는 Repository를 주입 -> repository를 통해서 DB와 연동하는 역할
     @InjectRepository(PostsModel)
     private readonly postsRepository: Repository<PostsModel>,
   ) {}
 
-  getAllPosts() {
-    return posts;
+  async getAllPosts() {
+    return this.postsRepository.find();
   }
 
   getPostById(id: number) {
