@@ -13,7 +13,7 @@ export class AppController {
   @Post('users')
   postUser() {
     return this.userRepository.save({
-      title: 'test title',
+      // title: 'test title',
     });
   }
 
@@ -32,7 +32,7 @@ export class AppController {
 
     return this.userRepository.save({
       ...user,
-      title: user.title + '0',
+      title: user.title + '00',
     });
   }
 }
