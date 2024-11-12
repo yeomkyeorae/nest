@@ -8,6 +8,11 @@ import {
   VersionColumn,
 } from 'typeorm';
 
+export enum Role {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
 @Entity()
 export class UserModel {
   // uuid 활용
@@ -33,6 +38,13 @@ export class UserModel {
     unique: false,
   })
   title: string;
+
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.USER,
+  })
+  role: Role;
 
   // 데이터가 생성되는 날짜와 시간이 자동으로 찍힌다.
   @CreateDateColumn()
