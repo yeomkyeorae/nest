@@ -74,7 +74,7 @@ export class UserModel {
   addtionalId: number;
 
   @OneToOne(() => ProfileModel, (profile) => profile.user, {
-    eager: true, // find() 실행할 때 마다 항상 같이 relation을 가져온다!
+    eager: false, // find() 실행할 때 마다 항상 같이 relation을 가져온다!
     cascade: true, // 저장할 때 relation을 한번에 같이 저장한다!
     nullable: false, // null이 가능한지
 
