@@ -2,6 +2,8 @@ import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserModel } from './entity/user.entity';
 import {
+  // ILike,
+  // LessThan,
   // Between,
   // Equal,
   // ILike,
@@ -32,6 +34,93 @@ export class AppController {
     private readonly tagRepository: Repository<TagModel>,
   ) {}
 
+  @Post('sample')
+  async sample() {
+    // 모델에 해당하는 객체 생성 - 저장을 안함
+    // const user1 = this.userRepository.create({
+    //   email: 'user1@ai.com',
+    // });
+
+    // 저장
+    // const user2 = this.userRepository.save({
+    //   email: 'user2@ai.com',
+    // });
+
+    // preload
+    // 입력된 값을 기반으로 데이터베이스에 있는 데이터를 가져오고
+    // 추가 입력된 값으로 데이터베이스에서 가져온 값들을 대체함
+    // 저장하지는 않음!
+    // const user3 = this.userRepository.preload({
+    //   id: 102,
+    //   email: 'user3@ai.com',
+    // });
+
+    // 삭제하기
+    // this.userRepository.delete({
+    //   id: 102,
+    // });
+
+    // 값을 증가시킴
+    // this.userRepository.increment(
+    //   {
+    //     id: 2,
+    //   },
+    //   'count',
+    //   2,
+    // );
+
+    // 값을 감소시킴
+    // this.userRepository.decrement(
+    //   {
+    //     id: 2,
+    //   },
+    //   'count',
+    //   4,
+    // );
+
+    // 개수 카운팅
+    // const count = this.userRepository.count({
+    //   where: {
+    //     email: ILike('%0%'),
+    //   },
+    // });
+
+    // 합계
+    // const sum = this.userRepository.sum('count', {
+    //   id: LessThan(4),
+    // });
+
+    // 평균
+    // const average = this.userRepository.average('count', {
+    //   id: LessThan(4),
+    // });
+
+    // 최솟값
+    // const min = this.userRepository.minimum('count', {
+    //   id: LessThan(4),
+    // });
+
+    // 최댓값
+    // const max = this.userRepository.maximum('count', {
+    //   id: LessThan(10),
+    // });
+
+    // this.userRepository.find({})
+
+    // this.userRepository.findOne({
+    //   where: {
+    //     id: 2,
+    //   },
+    // });
+
+    // 페이지네이션에 활용
+    const usersAndCount = await this.userRepository.findAndCount({
+      take: 20,
+    });
+
+    return usersAndCount;
+  }
+
   @Post('users')
   async postUser() {
     for (let i = 0; i < 100; i++) {
@@ -44,6 +133,9 @@ export class AppController {
   @Get('users')
   getUsers() {
     return this.userRepository.find({
+      order: {
+        id: 'ASC',
+      },
       where: {
         // id: Not(2), // 아닌 경우에 가져오기
         // id: LessThan(10), // 보다 작은 경우에
