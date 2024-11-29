@@ -38,12 +38,14 @@ export class PostsService {
     return post;
   }
 
-  async createPost(author: string, title: string, content: string) {
+  async createPost(authorId: number, title: string, content: string) {
     // create 메소드 -> 저장할 객체를 생성
     // save 메소드 -> create 메소드에서 생성한 객체를 저장
 
     const post = this.postsRepository.create({
-      author,
+      author: {
+        id: authorId,
+      },
       title,
       content,
       likeCount: 0,
@@ -55,12 +57,7 @@ export class PostsService {
     return newPost;
   }
 
-  async updatePost(
-    postId: number,
-    author: string,
-    title: string,
-    content: string,
-  ) {
+  async updatePost(postId: number, title: string, content: string) {
     // save는...
     // 1. 데이터가 존재하지 않는다면 (id 기준으로) 새로 생성한다.
     // 2. 데이터가 존재한다면 (같은 id가 존재하면) 업데이트한다.
@@ -73,10 +70,6 @@ export class PostsService {
 
     if (!post) {
       throw new NotFoundException();
-    }
-
-    if (author) {
-      post.author = author;
     }
 
     if (title) {
