@@ -55,12 +55,14 @@ export class AuthService {
       expiresIn: isRefreshToken ? 3600 : 300,
     });
   }
+
   loginUser(user: Pick<UsersModel, 'email' | 'id'>) {
     return {
       accessToken: this.signToken(user, false),
       refreshToken: this.signToken(user, true),
     };
   }
+
   async authenticateWithEmailAndPassword(
     user: Pick<UsersModel, 'email' | 'password'>,
   ) {
@@ -77,5 +79,11 @@ export class AuthService {
     }
 
     return existingUser;
+  }
+
+  async loginWIthEmail(user: Pick<UsersModel, 'email' | 'password'>) {
+    const existingUser = await this.authenticateWithEmailAndPassword(user);
+
+    return this.loginUser(existingUser);
   }
 }
