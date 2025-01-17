@@ -81,7 +81,7 @@ export class AuthService {
     return existingUser;
   }
 
-  async loginWIthEmail(user: Pick<UsersModel, 'email' | 'password'>) {
+  async loginWithEmail(user: Pick<UsersModel, 'email' | 'password'>) {
     const existingUser = await this.authenticateWithEmailAndPassword(user);
 
     return this.loginUser(existingUser);
@@ -92,7 +92,10 @@ export class AuthService {
   ) {
     const hash = await bcrypt.hash(user.password, HASH_ROUNDS);
 
-    const newUser = await this.usersService.createUser(user);
+    const newUser = await this.usersService.createUser({
+      ...user,
+      password: hash,
+    });
 
     return this.loginUser(newUser);
   }
