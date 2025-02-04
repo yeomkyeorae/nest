@@ -36,6 +36,25 @@ export class AuthService {
    */
 
   /**
+   * 헤더로부터 토큰을 받을 때
+   * { authorization: 'Basic {token}' }
+   * { authorization: 'Bearer {token}' }
+   */
+  async extractTokenFromHeader(header: string, isBearer: boolean) {
+    const splitToken = header.split(' ');
+
+    const prefix = isBearer ? 'Bearer' : 'Basic';
+
+    if (splitToken.length !== 2 || splitToken[0] !== prefix) {
+      throw new UnauthorizedException('잘못된 토큰입니다!');
+    }
+
+    const token = splitToken[1];
+
+    return token;
+  }
+
+  /**
    * 만드는 기능
    *
    * 1) registerWithEmail
