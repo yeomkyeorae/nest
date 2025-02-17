@@ -43,17 +43,17 @@ export class PostsController {
   // id에 해당하는 post 변경
   @Put(':id')
   putPost(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body('title') title?: string,
     @Body('content') content?: string,
   ) {
-    return this.postsService.updatePost(+id, title, content);
+    return this.postsService.updatePost(id, title, content);
   }
 
   // 5) DELETE /posts/:d
   // id에 해댕하는 post 삭제
   @Delete(':id')
-  deletePost(@Param('id') id: string) {
-    return this.postsService.deletePost(+id);
+  deletePost(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.deletePost(id);
   }
 }
