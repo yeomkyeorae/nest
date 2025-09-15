@@ -1,13 +1,10 @@
+import { BaseModel } from 'src/common/entity/base.entity';
 import { UsersModel } from 'src/users/entities/users.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 // Entity로 테이블을 생성한다.
 @Entity()
-export class PostsModel {
-  //자동 primary 컬럼
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class PostsModel extends BaseModel {
   // Column로 테이블 컬럼을 생성한다.
   // 1) UserModel과 연동한다. foreign key를 이용해서
   // 2) null이 될 수 없다.
