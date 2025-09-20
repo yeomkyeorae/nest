@@ -3,7 +3,7 @@ import {
   Injectable,
   // ArgumentMetadata,
   BadRequestException,
-  ArgumentMetadata,
+  // ArgumentMetadata,
 } from '@nestjs/common';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class MaxLengthPipe implements PipeTransform {
     private readonly subject: string,
   ) {}
 
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: any) {
     if (value.toString().length > this.length) {
       throw new BadRequestException(
         `${this.subject} 최대 길이는 ${this.length}입니다.`,
@@ -42,7 +42,7 @@ export class MinLengthPipe implements PipeTransform {
     private readonly subject: string,
   ) {}
 
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: any) {
     if (value.toString().length < this.length) {
       throw new BadRequestException(
         `${this.subject} 최소 길이는 ${this.length}입니다.`,

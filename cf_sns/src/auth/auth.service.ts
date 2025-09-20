@@ -167,7 +167,7 @@ export class AuthService {
     if (!existingUser) {
       throw new UnauthorizedException('존재하지 않는 사용자입니다!');
     }
-
+    console.log(user.password, existingUser.password);
     const passOk = await bcrypt.compare(user.password, existingUser.password);
 
     if (!passOk) {
