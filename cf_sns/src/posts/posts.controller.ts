@@ -7,11 +7,12 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
+import { User } from 'src/users/decorator/user.decorator';
+import { UsersModel } from 'src/users/entities/users.entity';
 
 @Controller('posts') // 첫 인자는 기존 path에 접두어 붙이는 역할
 export class PostsController {
@@ -36,11 +37,11 @@ export class PostsController {
   @Post()
   @UseGuards(AccessTokenGuard)
   postPosts(
-    @Request() req: any,
+    @User() user: UsersModel,
     @Body('title') title: string,
     @Body('content') content: string,
   ) {
-    const authorId = req.user.id;
+    const authorId = user.id;
 
     return this.postsService.createPost(authorId, title, content);
   }
