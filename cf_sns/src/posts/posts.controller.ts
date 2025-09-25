@@ -12,7 +12,6 @@ import {
 import { PostsService } from './posts.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
 import { User } from 'src/users/decorator/user.decorator';
-import { UsersModel } from 'src/users/entities/users.entity';
 
 @Controller('posts') // 첫 인자는 기존 path에 접두어 붙이는 역할
 export class PostsController {
