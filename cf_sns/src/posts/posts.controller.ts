@@ -12,6 +12,7 @@ import {
 import { PostsService } from './posts.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
 import { User } from 'src/users/decorator/user.decorator';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Controller('posts') // 첫 인자는 기존 path에 접두어 붙이는 역할
 export class PostsController {
@@ -33,14 +34,11 @@ export class PostsController {
 
   // 3) POST /posts
   // post 생성
+  // DTO - Data Transfer Object
   @Post()
   @UseGuards(AccessTokenGuard)
-  postPosts(
-    @User('id') userId: number,
-    @Body('title') title: string,
-    @Body('content') content: string,
-  ) {
-    return this.postsService.createPost(userId, title, content);
+  postPosts(@User('id') userId: number, @Body() body: CreatePostDto) {
+    return this.postsService.createPost(userId, body);
   }
 
   // 4) PUT /posts/:id
