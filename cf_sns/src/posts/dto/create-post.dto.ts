@@ -1,13 +1,7 @@
-import { IsString } from 'class-validator';
+import { PickType } from '@nestjs/mapped-types';
+import { PostsModel } from '../entities/posts.entity';
 
-export class CreatePostDto {
-  @IsString({
-    message: '제목은 문자열이어야 합니다.',
-  })
-  title: string;
+// Pick, Omit, Partial -> Type 반환
+// PickType, OmitType, PartialType -> 값 반환
 
-  @IsString({
-    message: '내용은 문자열이어야 합니다.',
-  })
-  content: string;
-}
+export class CreatePostDto extends PickType(PostsModel, ['title', 'content']) {}
